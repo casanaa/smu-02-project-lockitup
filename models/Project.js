@@ -1,13 +1,16 @@
 const { Model, DataTypes } = require('sequelize');
 //import the built in data types
 const sequelize = require('../config/connection');
-
+//create our Project model
 class Project extends Model {}
 
+//create fields/columns for Project model
 Project.init(
   //extending model and calling 
   {
+    //manually define the primary key
     id: {
+      //define what the ID would be 
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
@@ -38,10 +41,11 @@ Project.init(
       },
     },
   },
+  //link to database connection
   {
     sequelize,
     timestamps: false,
-    //don't fotrget to enable tiemstamps
+    //prevent sequelize from renaming the table
     freezeTableName: true,
     underscored: true,
     modelName: 'project',
