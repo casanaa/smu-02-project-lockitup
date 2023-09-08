@@ -1,9 +1,11 @@
 const { Model, DataTypes } = require('sequelize');
+//import the built in data types
 const sequelize = require('../config/connection');
 
 class Project extends Model {}
 
 Project.init(
+  //extending model and calling 
   {
     id: {
       type: DataTypes.INTEGER,
@@ -17,6 +19,7 @@ Project.init(
     },
     description: {
       type: DataTypes.STRING,
+      //allowNull defaults to true
     },
     date_created: {
       type: DataTypes.DATE,
@@ -38,6 +41,7 @@ Project.init(
   {
     sequelize,
     timestamps: false,
+    //don't fotrget to enable tiemstamps
     freezeTableName: true,
     underscored: true,
     modelName: 'project',
