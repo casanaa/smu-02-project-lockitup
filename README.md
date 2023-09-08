@@ -1,21 +1,21 @@
-##Lock It Up 
+# Lock It Up 
 
 ## About
 
-##Description
+## Description
 
-##Challenges
+## Challenges
 
-##Future Development
+##  Future Development
 
-##Motivation
+## Motivation
 
-##Success
+## Success
 
-##Contributors
+## Contributors
 Antonio Casanam, Bisrat Mengesha, Faysia Lopez, and Rosa Valdez
 
-##User Story
+## User Story
 
-##Acceptance Criteria
+## Acceptance Criteria
 
