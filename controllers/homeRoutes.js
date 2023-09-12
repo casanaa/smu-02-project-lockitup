@@ -82,4 +82,8 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
+router.get('/add_lock', (req, res) => {
+  res.render('add_lock');
+});
+
 module.exports = router;
