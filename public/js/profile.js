@@ -1,5 +1,5 @@
 
-  // Get the button and dropdown content elements
+// Get the button and dropdown content elements
 const dropdownBtn = document.querySelector('.dropbtn');
 const dropdownContent = document.querySelector('.dropdown-content');
 
