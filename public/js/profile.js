@@ -1,47 +1,21 @@
-const newFormHandler = async (event) => {
-  event.preventDefault();
 
-  const name = document.querySelector('#project-name').value.trim();
-  const needed_funding = document.querySelector('#project-funding').value.trim();
-  const description = document.querySelector('#project-desc').value.trim();
+  // Get the button and dropdown content elements
+const dropdownBtn = document.querySelector('.dropbtn');
+const dropdownContent = document.querySelector('.dropdown-content');
 
-  if (name && needed_funding && description) {
-    const response = await fetch(`/api/projects`, {
-      method: 'POST',
-      body: JSON.stringify({ name, needed_funding, description }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+// Toggle the dropdown when the button is clicked
+dropdownBtn.addEventListener('click', function() {
+  dropdownContent.style.display === 'block'
+    ? (dropdownContent.style.display = 'none')
+    : (dropdownContent.style.display = 'block');
+});
 
-    if (response.ok) {
-      document.location.replace('/profile');
-    } else {
-      alert('Failed to create project');
+// Close the dropdown if the user clicks outside of it
+window.addEventListener('click', function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    if (dropdownContent.style.display === 'block') {
+      dropdownContent.style.display = 'none';
     }
   }
-};
+});
 
-const delButtonHandler = async (event) => {
-  if (event.target.hasAttribute('data-id')) {
-    const id = event.target.getAttribute('data-id');
-
-    const response = await fetch(`/api/projects/${id}`, {
-      method: 'DELETE',
-    });
-
-    if (response.ok) {
-      document.location.replace('/profile');
-    } else {
-      alert('Failed to delete project');
-    }
-  }
-};
-
-document
-  .querySelector('.new-project-form')
-  .addEventListener('submit', newFormHandler);
-
-document
-  .querySelector('.project-list')
-  .addEventListener('click', delButtonHandler);
