@@ -1,3 +1,5 @@
+const viewLockFormHandler = async (event) => {
+  event.preventDefault();
 
 // Get the button and dropdown content elements
 const dropdownBtn = document.querySelector('.dropbtn');
@@ -17,4 +19,4 @@ window.addEventListener('click', function(event) {
       dropdownContent.style.display = 'none';
     }
   }
-});
+});}
