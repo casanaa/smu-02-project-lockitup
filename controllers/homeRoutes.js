@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
 
 router.get('/view_locks/:id', async (req, res) => {
   try {
-    const projectData = await Lock.findByPk(req.params.id, {
+    const lockData = await Lock.findByPk(req.params.id, {
       include: [
         {
           model: User,
@@ -26,10 +26,10 @@ router.get('/view_locks/:id', async (req, res) => {
       ],
     });
 
-    const project = projectData.get({ plain: true });
+    const lock = lockData.get({ plain: true });
 
-    res.render('project', {
-      ...project,
+    res.render('view_locks', {
+      ...lock,
       logged_in: req.session.logged_in,
       user_name: req.session.user_name,
     });
@@ -41,18 +41,18 @@ router.get('/view_locks/:id', async (req, res) => {
 // Use withAuth middleware to prevent access to route
 router.get('/view_locks', withAuth, async (req, res) => {
   try {
-    // Find the logged in user based on the session ID
-    const userData = await this.lock.findAll(req.session.user_id, {
-      attributes: { exclude: ['password'] },
-      include: [{ model: Project }],
+    const locksData = await Lock.findAll({
+      where: {
+        user_id: req.session.user_id
+      }
     });
 
-    const user = userData.get({ plain: true });
+    console.log(`=== Locks Data: ${JSON.stringify(locksData)}`)
+
+    // const user = userData.get({ plain: true });
 
     res.render('view_locks', {
-      ...user,
-      logged_in: true,
-      user_name: req.session.user_name,
+      locksData
     });
   } catch (err) {
     res.status(500).json(err);
@@ -71,6 +71,10 @@ router.get('/login', (req, res) => {
 
 router.get('/add_lock', (req, res) => {
   res.render('add_lock');
+});
+
+router.get('/view_locks', (req, res) => {
+  res.render('view_locks');
 });
 
 module.exports = router;

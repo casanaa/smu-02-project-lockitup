@@ -1,6 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 const sequelize = require('../config/connection');
+const { encrypt } = require('../utils/crypto');
 
 //create our Lock model
 class Lock extends Model {}
@@ -36,11 +37,11 @@ Lock.init(
   {
     hooks: {
       beforeCreate: async (newLockData) => {
-        newLockData.password = await bcrypt.hash(newLockData.password, 10);
+        newLockData.password = await encrypt(newLockData.password);
         return newLockData;
       },
       beforeUpdate: async (updatedLockData) => {
-        updatedLockData.password = await bcrypt.hash(updatedLockData.password, 10);
+        updatedLockData.password = await encrypt(updatedLockData.password);
         return updatedLockData;
       },
     },
