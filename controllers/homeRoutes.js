@@ -41,18 +41,18 @@ router.get('/view_locks/:id', async (req, res) => {
 // Use withAuth middleware to prevent access to route
 router.get('/view_locks', withAuth, async (req, res) => {
   try {
-    // Find the logged in user based on the session ID
-    const userData = await this.lock.findAll(req.session.user_id, {
-      attributes: { exclude: ['password'] },
-      include: [{ model: Lock }],
+    const locksData = await Lock.findAll({
+      where: {
+        user_id: req.session.user_id
+      }
     });
 
-    const user = userData.get({ plain: true });
+    console.log(`=== Locks Data: ${JSON.stringify(locksData)}`)
+
+    // const user = userData.get({ plain: true });
 
     res.render('view_locks', {
-      ...user,
-      logged_in: true,
-      user_name: req.session.user_name,
+      locksData
     });
   } catch (err) {
     res.status(500).json(err);
