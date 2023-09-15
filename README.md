@@ -3,7 +3,7 @@
 ## About
 
 ## Description
-This aspplication allows users to add,save and search the login information for any of the online sites that they use.
+This application allows users to add,save and search the login information for any of the online sites that they use.
 ## Challenges
 
 ##  Future Development
