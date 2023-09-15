@@ -26,10 +26,10 @@ router.get('/view_locks/:id', async (req, res) => {
       ],
     });
 
-    const project = projectData.get({ plain: true });
+    const lock = lockData.get({ plain: true });
 
-    res.render('project', {
-      ...project,
+    res.render('view_locks', {
+      ...lock,
       logged_in: req.session.logged_in,
       user_name: req.session.user_name,
     });
@@ -44,7 +44,7 @@ router.get('/view_locks', withAuth, async (req, res) => {
     // Find the logged in user based on the session ID
     const userData = await this.lock.findAll(req.session.user_id, {
       attributes: { exclude: ['password'] },
-      include: [{ model: Project }],
+      include: [{ model: Lock }],
     });
 
     const user = userData.get({ plain: true });
