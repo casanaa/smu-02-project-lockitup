@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 
 router.get('/view_locks/:id', async (req, res) => {
   try {
-    const projectData = await Lock.findByPk(req.params.id, {
+    const lockData = await Lock.findByPk(req.params.id, {
       include: [
         {
           model: User,
