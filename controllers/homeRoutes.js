@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Project, User } = require('../models');
+const { Project, User, Lock } = require('../models');
 const withAuth = require('../utils/auth');
 
 router.get('/', async (req, res) => {
@@ -26,7 +26,6 @@ router.get('/', async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
-  
 });
 
 router.get('/project/:id', async (req, res) => {
@@ -85,6 +84,33 @@ router.get('/login', (req, res) => {
 
 router.get('/add_lock', (req, res) => {
   res.render('add_lock');
+});
+
+router.get('/view_locks', async (req, res) => {
+  try {
+    const locks = await Lock.findAll({
+      raw: true,
+    }).catch((error) => console.log(error));
+
+    console.log('LOCKS:', locks);
+    res.render('added', { locks });
+  } catch (error) {
+    res.status(400).json(err);
+  }
+});
+
+router.get('/locks/:id', async (req, res) => {
+  try {
+    const lock = await Lock.findByPk(req.params.id).catch((error) =>
+      console.log(error)
+    );
+
+    const lockData = lock.get({ plain: true });
+    console.log('LOCK:', lockData);
+    res.render('new', { lock: lockData });
+  } catch (error) {
+    res.status(400).json(err);
+  }
 });
 
 module.exports = router;

@@ -27,16 +27,16 @@ Lock.init(
     },
   },
   {
-    hooks: {
-      beforeCreate: async (newLockData) => {
-        newLockData.password = await bcrypt.hash(newLockData.password, 10);
-        return newLockData;
-      },
-      beforeUpdate: async (updatedLockData) => {
-        updatedLockData.password = await bcrypt.hash(updatedLockData.password, 10);
-        return updatedLockData;
-      },
-    },
+    // hooks: {
+    //   beforeCreate: async (newLockData) => {
+    //     newLockData.password = await bcrypt.hash(newLockData.password, 10);
+    //     return newLockData;
+    //   },
+    //   beforeUpdate: async (updatedLockData) => {
+    //     updatedLockData.password = await bcrypt.hash(updatedLockData.password, 10);
+    //     return updatedLockData;
+    //   },
+    // },
     sequelize,
     timestamps: false,
     underscored: true,
