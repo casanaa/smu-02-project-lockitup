@@ -2,7 +2,7 @@ const router = require('express').Router();
 const Lock = require('../../models/Lock');
 const withAuth = require('../../utils/auth');
 
-router.delete('/:id', withAuth, async (req, res) => {
+router.delete('/added/:id', withAuth, async (req, res) => {
   try {
     const lockData = await Lock.destroy({
       where: {
@@ -27,10 +27,11 @@ router.post('/add_locks', withAuth, async (req, res) => {
     const newLock = await Lock.create({
       ...req.body,
       user_id: req.session.user_id,
+
     });
     console.log(newLock);
     res.status(200).json(newLock);
-    // res.render('new', { newLock });
+    res.render('new', { newLock });
   } catch (error) {
     res.status(400).json(error);
   }

@@ -38,30 +38,31 @@ router.get('/view_locks/:id', async (req, res) => {
 });
 
 // Use withAuth middleware to prevent access to route
-router.get('/view_locks', withAuth, async (req, res) => {
-  try {
-    // Find the logged in user based on the session ID
-    const userData = await this.lock.findAll(req.session.user_id, {
-      attributes: { exclude: ['password'] },
-      include: [{ model: Lock }],
-    });
+// router.get('/view_locks', withAuth, async (req, res) => {
+//   try {
+//     // Find the logged in user based on the session ID
+//     const userData = await this.lock.findAll(req.session.user_id, {
+//       attributes: { exclude: ['password'] },
+//       include: [{ model: Lock }],
+//     });
 
-    const user = userData.get({ plain: true });
+//     const user = userData.get({ plain: true });
 
-    res.render('view_locks', {
-      ...user,
-      logged_in: true,
-      user_name: req.session.user_name,
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+//     res.render('view_locks', {
+//       ...user,
+//       logged_in: true,
+//       user_name: req.session.user_name,
+//     });
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
 
 router.get('/login', (req, res) => {
   // If the user is already logged in, redirect the request to another route
   if (req.session.logged_in) {
-    res.redirect('/view_locks');
+   // res.redirect('/view_locks');
+   res.render('view_locks')
     return;
   }
 
@@ -80,6 +81,7 @@ router.get('/view_locks', async (req, res) => {
 
     console.log('LOCKS:', locks);
     res.render('added', { locks });
+    
   } catch (error) {
     res.status(400).json(err);
   }
