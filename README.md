@@ -25,7 +25,6 @@ I WANT one place to save and store my online passwords
 SO THAT I can keep my accounts safe
 
 ## Acceptance Criteria
-## Acceptance Criteria
 GIVEN that I want to store my login information in one place 
 WHEN I open the app/link/website,register,and log on 
 THEN I can enter my login information 
