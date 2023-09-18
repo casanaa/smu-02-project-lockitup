@@ -1,22 +1,25 @@
 const viewLockFormHandler = async (event) => {
-  event.preventDefault();
-
-// Get the button and dropdown content elements
-const dropdownBtn = document.querySelector('.dropbtn');
-const dropdownContent = document.querySelector('.dropdown-content');
-
-// Toggle the dropdown when the button is clicked
-dropdownBtn.addEventListener('click', function() {
-  dropdownContent.style.display === 'block'
-    ? (dropdownContent.style.display = 'none')
-    : (dropdownContent.style.display = 'block');
-});
-
-// Close the dropdown if the user clicks outside of it
-window.addEventListener('click', function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    if (dropdownContent.style.display === 'block') {
-      dropdownContent.style.display = 'none';
+    event.preventDefault();
+  
+    // Collect values from the login form
+    const site = document.querySelector('#siteName').value.trim();
+    const username = document.querySelector('#username').value.trim();
+    const password = document.querySelector('#password').value.trim();
+  
+    if (site && username && password) {
+      // Send a POST request to the API endpoint
+      const response = await fetch('/api/locks/', {
+        method: 'POST',
+        body: JSON.stringify({ site, username, password }),
+        headers: { 'Content-Type': 'application/json' },
+      });
+  
+      if (response.ok) {
+        // If successful, redirect the browser to the profile page
+        alert(response.statusText);
+      } else {
+        alert(response.statusText);
+      }
     }
-  }
-});}
+  };
+  

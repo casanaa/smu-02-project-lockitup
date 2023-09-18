@@ -16,7 +16,7 @@ const addLockFormHandler = async (event) => {
   
       if (response.ok) {
         // If successful, redirect the browser to the profile page
-        alert(response.statusText);
+        window.location.replace('/view_locks');
       } else {
         alert(response.statusText);
       }
@@ -24,6 +24,6 @@ const addLockFormHandler = async (event) => {
   };
   
   document
-    .querySelector('.addLock-form')
+    .querySelector('#addLock-form')
     .addEventListener('submit', addLockFormHandler);
   

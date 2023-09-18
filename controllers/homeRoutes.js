@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { Lock, User } = require('../models');
 const withAuth = require('../utils/auth');
+const { decrypt } = require('../utils/crypto');
 
 router.get('/', async (req, res) => {
   try {
@@ -15,48 +16,30 @@ router.get('/', async (req, res) => {
   
 });
 
-router.get('/view_locks/:id', async (req, res) => {
-  try {
-    const lockData = await Lock.findByPk(req.params.id, {
-      include: [
-        {
-          model: User,
-          attributes: ['name'],
-        },
-      ],
-    });
-
-    const lock = lockData.get({ plain: true });
-
-    res.render('view_locks', {
-      ...lock,
-      logged_in: req.session.logged_in,
-      user_name: req.session.user_name,
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-// Use withAuth middleware to prevent access to route
 router.get('/view_locks', withAuth, async (req, res) => {
+  let decryptedLockData;
+  let locksData;
+
   try {
-    const locksData = await Lock.findAll({
+    locksData = await Lock.findAll({
       where: {
         user_id: req.session.user_id
       }
-    });
+    }).then((locks) => {
+      locks.forEach((lock) => {lock.password = decrypt(lock.password)});
 
-    console.log(`=== Locks Data: ${JSON.stringify(locksData)}`)
-
-    // const user = userData.get({ plain: true });
-
-    res.render('view_locks', {
-      locksData
+    // The below line is to make Handlebars happy. DO NOT REMOVE!
+      decryptedLockData = locks.map((lock) => lock.get({ plain: true }));
     });
   } catch (err) {
     res.status(500).json(err);
   }
+  
+  res.render('view_locks', {
+    logged_in: req.session.logged_in,
+    locks: decryptedLockData,
+    name: req.session.user_name,
+  });
 });
 
 router.get('/login', (req, res) => {
@@ -70,11 +53,9 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/add_lock', (req, res) => {
-  res.render('add_lock');
-});
-
-router.get('/view_locks', (req, res) => {
-  res.render('view_locks');
+  res.render('add_lock', {
+    logged_in: req.session.logged_in,
+  });
 });
 
 module.exports = router;
