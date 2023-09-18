@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { Lock, User } = require('../models');
 const withAuth = require('../utils/auth');
+const { decrypt } = require('../utils/crypto');
 
 router.get('/', async (req, res) => {
   try {
@@ -15,23 +16,26 @@ router.get('/', async (req, res) => {
   
 });
 
-router.get('/view_locks/:id', async (req, res) => {
+router.get('/view_locks', withAuth, async (req, res) => {
+  let locksData;
+  let locks;
+  const name = req.session.user_name;
   try {
-    const lockData = await Lock.findByPk(req.params.id, {
-      include: [
-        {
-          model: User,
-          attributes: ['name'],
-        },
-      ],
+    locksData = await Lock.findAll({
+      where: {
+        user_id: req.session.user_id
+      }
     });
 
-    const lock = lockData.get({ plain: true });
+    // encryptedPassword = locksData.password;
+    // decryptedPassword = decrypt(encryptedPassword);
 
+    // The below line is to make Handlebars happy. DO NOT REMOVE!
+    locks = locksData.map((lock) => lock.get({ plain: true }));
+    
     res.render('view_locks', {
-      ...lock,
-      logged_in: req.session.logged_in,
-      user_name: req.session.user_name,
+      locks,
+      name,
     });
   } catch (err) {
     res.status(500).json(err);
