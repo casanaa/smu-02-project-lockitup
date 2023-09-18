@@ -9,6 +9,9 @@ This application allows users to add,save and search the login information for a
 ## Challenges
 We faced difficulties with with branches,PMI, decryption, deploying on Heroku and overall technical difficulties. As a team, our schedules varied so communication was challenging.
 
+## We Learned
+Throughout this process, we realized that our vision for this application was bogger and required more knowledge and skills that we have yet to achieve at this moment. We did get to use it as an oppurtunity to read and research into what was needed for this project as look ahead to future developments.
+
 ##  Future Development
 e would like to have View Locks in alphabetical order when you go to View. As well as create categories such as Social Media,Shopping, Finances,etc. to better find your login information and keep things organized. Also integrate account lookup with haveibeenpwned.com, a technology that alerts you if one of your passwsords or accounts was compromised in a data breach. Lastly,we want to polish up the aesthetics of the page itself.## Motivation
 The fraustration of keeping track and remembering the log in infomation to many online accounts. 
