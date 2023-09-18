@@ -17,30 +17,29 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/view_locks', withAuth, async (req, res) => {
+  let decryptedLockData;
   let locksData;
-  let locks;
-  const name = req.session.user_name;
+
   try {
     locksData = await Lock.findAll({
       where: {
         user_id: req.session.user_id
       }
-    });
-
-    // encryptedPassword = locksData.password;
-    // decryptedPassword = decrypt(encryptedPassword);
+    }).then((locks) => {
+      locks.forEach((lock) => {lock.password = decrypt(lock.password)});
 
     // The below line is to make Handlebars happy. DO NOT REMOVE!
-    locks = locksData.map((lock) => lock.get({ plain: true }));
-    
-    res.render('view_locks', {
-      logged_in: req.session.logged_in,
-      locks,
-      name,
+      decryptedLockData = locks.map((lock) => lock.get({ plain: true }));
     });
   } catch (err) {
     res.status(500).json(err);
   }
+  
+  res.render('view_locks', {
+    logged_in: req.session.logged_in,
+    locks: decryptedLockData,
+    name: req.session.user_name,
+  });
 });
 
 router.get('/login', (req, res) => {
