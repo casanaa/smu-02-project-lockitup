@@ -34,29 +34,9 @@ router.get('/view_locks', withAuth, async (req, res) => {
     locks = locksData.map((lock) => lock.get({ plain: true }));
     
     res.render('view_locks', {
+      logged_in: req.session.logged_in,
       locks,
       name,
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-// Use withAuth middleware to prevent access to route
-router.get('/view_locks', withAuth, async (req, res) => {
-  try {
-    const locksData = await Lock.findAll({
-      where: {
-        user_id: req.session.user_id
-      }
-    });
-
-    console.log(`=== Locks Data: ${JSON.stringify(locksData)}`)
-
-    // const user = userData.get({ plain: true });
-
-    res.render('view_locks', {
-      locksData
     });
   } catch (err) {
     res.status(500).json(err);
@@ -74,11 +54,9 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/add_lock', (req, res) => {
-  res.render('add_lock');
-});
-
-router.get('/view_locks', (req, res) => {
-  res.render('view_locks');
+  res.render('add_lock', {
+    logged_in: req.session.logged_in,
+  });
 });
 
 module.exports = router;
