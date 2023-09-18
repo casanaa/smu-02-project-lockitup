@@ -23,6 +23,3 @@ const viewLockFormHandler = async (event) => {
     }
   };
   
-  document
-    .querySelector('.addLock-form')
-    .addEventListener('submit', addLockFormHandler);

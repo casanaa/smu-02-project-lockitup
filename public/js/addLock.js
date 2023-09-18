@@ -24,6 +24,6 @@ const addLockFormHandler = async (event) => {
   };
   
   document
-    .querySelector('.addLock-form')
+    .querySelector('#addLock-form')
     .addEventListener('submit', addLockFormHandler);
   
