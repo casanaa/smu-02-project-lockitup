@@ -1,26 +1,26 @@
 <div class="row">
-  <div class="col-auto">
-    <h1>Hi, {{name}}!</h1>
-    <h2>Welcome to your Lockbox!</h2>
+<div class="col-auto">
+<h1>Hi, {{name}}!</h1>
+<h2>Welcome to your Lockbox!</h2>
 
-  </div>
+</div>
 </div>
 
 <div class="row mt-4">
-  <div class="col-md-6">
-    <h2>Lock List</h2>
-    <p></p>
-    {{#each locks as |lock|}}
-    <h3>{{lock.site}}</h3>
-    <ul>
-      <li style="list-style-type: none;"><strong>Username:</strong> {{lock.username}}</li>
-      <li style="list-style-type: none;"><strong>Password:</strong> {{lock.password}}</li>
-    </ul>
-    {{else}}
-      You have no locks!
-    {{/each}}
+<div class="col-md-6">
+<h2>Lock List</h2>
+<p></p>
+{{#each locks as |lock|}}
+<h3>{{lock.site}}</h3>
+<ul>
+<li style="list-style-type: none;"><strong>Username:</strong> {{lock.username}}</li>
+<li style="list-style-type: none;"><strong>Password:</strong> {{lock.password}}</li>
+</ul>
+{{else}}
+You have no locks!
+{{/each}}
 
-  </div>
+</div>
 
   <div class="row">
   <div class="col-auto">
